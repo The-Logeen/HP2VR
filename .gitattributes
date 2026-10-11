@@ -1,3 +1,9 @@
 # Keep every file byte-for-byte as committed. The installer checks SHA-256
 # hashes from FILE-MANIFEST.csv, so line-ending conversion would break installs.
 * -text
+
+# The .h files are C++ (some are large generated mesh tables).
+*.h linguist-language=C++
+source/src/v31-reference/AvatarGeometry.h linguist-generated
+source/src/v31-reference/AvatarWalk.h linguist-generated
+source/src/v31-reference/WandGeometry.h linguist-generated
