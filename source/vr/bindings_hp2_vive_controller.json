@@ -1,0 +1,27 @@
+{
+  "controller_type": "vive_controller",
+  "name": "Harry Potter 2 VR - Vive",
+  "description": "Left pad moves, right pad turns, right trigger casts, left trigger jumps, grips hold objects, left menu opens menu, right menu skips dialogue.",
+  "bindings": {
+    "/actions/main": {
+      "poses": [
+        { "path": "/user/hand/left/pose/raw", "output": "/actions/main/in/left_pose" },
+        { "path": "/user/hand/right/pose/raw", "output": "/actions/main/in/right_pose" }
+      ],
+      "sources": [
+        { "path": "/user/hand/left/input/trackpad", "mode": "joystick", "inputs": { "position": { "output": "/actions/main/in/move" } } },
+        { "path": "/user/hand/right/input/trackpad", "mode": "joystick", "inputs": { "position": { "output": "/actions/main/in/turn" } } },
+        { "path": "/user/hand/right/input/trigger", "mode": "trigger", "inputs": { "pull": { "output": "/actions/main/in/cast" } } },
+        { "path": "/user/hand/left/input/trigger", "mode": "trigger", "inputs": { "pull": { "output": "/actions/main/in/jump" } } },
+        { "path": "/user/hand/left/input/grip", "mode": "button", "inputs": { "click": { "output": "/actions/main/in/left_grip" } } },
+        { "path": "/user/hand/right/input/grip", "mode": "button", "inputs": { "click": { "output": "/actions/main/in/right_grip" } } },
+        { "path": "/user/hand/left/input/application_menu", "mode": "button", "inputs": { "click": { "output": "/actions/main/in/menu" } } },
+        { "path": "/user/hand/right/input/application_menu", "mode": "button", "inputs": { "click": { "output": "/actions/main/in/skip_dialog" } } }
+      ],
+      "haptics": [
+        { "path": "/user/hand/left/output/haptic", "output": "/actions/main/out/left_haptic" },
+        { "path": "/user/hand/right/output/haptic", "output": "/actions/main/out/right_haptic" }
+      ]
+    }
+  }
+}

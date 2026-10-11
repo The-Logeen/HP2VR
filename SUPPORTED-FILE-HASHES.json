@@ -1,0 +1,74 @@
+{
+  "version": [
+    "HPCos_021009_1205-1",
+    "021009_1205",
+    "1"
+  ],
+  "files": [
+    {
+      "path": "System/Game.exe",
+      "bytes": 352256,
+      "sha256": "EBA64695B352B103611DC8E827E6BC44E8376E31D8CF3DA0B7E11D09EDC1A694"
+    },
+    {
+      "path": "System/Core.dll",
+      "bytes": 925696,
+      "sha256": "F6AD0A5FB348D868CB7499FDD727D3F6034ACF0D8BA3795AE78809893B4D5249"
+    },
+    {
+      "path": "System/Engine.dll",
+      "bytes": 2142208,
+      "sha256": "EFA56C753FE306C2AD2744C82E20258DA39DF9CE51B3B415D476F8282AE1A189"
+    },
+    {
+      "path": "System/Render.dll",
+      "bytes": 303104,
+      "sha256": "EB71BC45DAD3B744B9155F37E1BA59119A31743FC74A7FB8CB4DAFA93797755A"
+    },
+    {
+      "path": "System/Window.dll",
+      "bytes": 638976,
+      "sha256": "BBCB66A2015AFD58D6863D35F170908A05312A06CF5E94A676563E3DA236A8B6"
+    },
+    {
+      "path": "System/WinDrv.dll",
+      "bytes": 225280,
+      "sha256": "C886ECD1A0F17E25D0FA54E57F41485EF2AA61BA65231EB3C5ACED9C60AAD302"
+    },
+    {
+      "path": "System/D3DDrv.dll",
+      "bytes": 221184,
+      "sha256": "412078C350464C4B860893369BEC733084B91F11A5E235026BF7EBF777644F02"
+    },
+    {
+      "path": "System/d3d11drv.dll",
+      "bytes": 140288,
+      "sha256": "75E7284CA6D5EF22F3FA8ABFD7C7031C703F0120ED6D9B06165DA298C712EF4E"
+    },
+    {
+      "path": "System/Effects11.dll",
+      "bytes": 221184,
+      "sha256": "89DD37F10227AE8AE2C8EF77847EEB3AA84062C7DCD93BA7E79A7DB08CB7173C"
+    },
+    {
+      "path": "System/Core.u",
+      "bytes": 61684,
+      "sha256": "C480E9A6D7AFB8F300C581E79459E28D8611685B8327848898246B056D333D9B"
+    },
+    {
+      "path": "System/Engine.u",
+      "bytes": 1470047,
+      "sha256": "E6E8F3C3E6E346BD53008E89F1706D7A4719317A34DDFB90D73040ABCF5FC29C"
+    },
+    {
+      "path": "System/hgame.u",
+      "bytes": 17559707,
+      "sha256": "5DE5F3EFE11F1E882C93EFF82D6EA35380E3428D5B80B49FCC2D311B49809576"
+    },
+    {
+      "path": "System/UWindow.u",
+      "bytes": 608825,
+      "sha256": "7E5878D0FE73BEFCB1BBCBC19784B7F115D4365B620614A334D420873A44D8BF"
+    }
+  ]
+}

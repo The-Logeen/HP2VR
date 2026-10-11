@@ -1,0 +1,11 @@
+# Standing calibration and climbing camera
+
+- Automatic avatar calibration now waits for live tracked input, PlayerWalking, no native front-end/menu, and HUD bCutSceneMode false. It no longer samples an initial body-only cinematic draw. The standing reference persists across level travel, so loading while crouched cannot redefine crouching as standing. Manual recalibration and SteamVR origin changes remain supported, also deferred until control-ready.
+- Added 3 cm to calibrated visual body eye height (scaling the body from planted feet, not moving the camera). Increased standing crouch deadzone from 1.5 to 5 cm. Deliberate crouching below that threshold still deforms knees/hips. Walking blend now snaps completely to zero below 0.01 at rest so a residual walk frame does not leave slightly bent knees indefinitely.
+- A shared bodyView predicate always includes Mounting and MountFinish, even with native cinematics enabled. Used for camera anchoring, native third-person body hiding and VR avatar eligibility, plus player-controlled turning. Native climbing state/animation/progression still runs; no script fast-forward or skip was added.
+- Avatar floor placement uses the full climbing cylinder half-height, not MountFinish's temporary half-sized collision cylinder. Previously the smaller cylinder raised the rendered avatar toward the camera by half the original cylinder height. Recovery's validated full height is reused when available; direct MountFinish entry doubles its current half-height as fallback. Native collision is unchanged.
+- Existing -26 camera offset, resolution, async transfer and tessellation-off settings preserved.
+
+Verification: Gate3 builds and existing regression tests pass. Standing tests cover a 4 cm relaxed lowering without crouch and a 10 cm deliberate lowering with crouch. Isolated simulated gameplay checks control-ready calibration; actual climbing camera comfort and body fit need headset verification.
+
+Test: normal launcher, load save while standing naturally, no manual calibration required. Check straight standing knees and crouching. Enable Native cinematics and climb a ledge: view should remain first-person with no third-person climb shot, while normal cinematics elsewhere still work. Report any remaining chest/camera intersection and the ledge/location.

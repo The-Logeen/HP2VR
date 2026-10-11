@@ -1,0 +1,3 @@
+LIBRARY HP2VRProbe
+EXPORTS
+    HP2VR_InitializeProbe=_HP2VR_InitializeProbe@0

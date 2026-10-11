@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify package contents and hashes
+        shell: powershell
+        run: .\Verify-Package.ps1
+      - name: Zip and publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          name="HP2VR-${GITHUB_REF_NAME}"
+          git archive --format=zip --prefix="$name/" -o "$name.zip" HEAD
+          gh release create "$GITHUB_REF_NAME" "$name.zip" --title "HP2VR $GITHUB_REF_NAME" --notes-file CHANGELOG.md --prerelease

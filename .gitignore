@@ -1,0 +1,34 @@
+# Local build output (release binaries live in payload/ and utilities/)
+source/build/
+*.obj
+*.pdb
+*.ilk
+*.exp
+
+# Installed copies, staged runtimes, downloaded dependencies
+Installed-HP2VR/
+Dependencies/
+runtime/
+baseline/
+release-staging/
+
+# Never commit game or third-party data
+*.u
+*.utx
+*.unr
+*.uax
+*.umx
+*.dds
+*.sav
+*.fco
+*.fxh
+openvr_api.dll
+D3D11Drv.dll
+Effects11.dll
+
+# Logs, archives and OS clutter
+*.log
+*.zip
+*.7z
+Thumbs.db
+desktop.ini

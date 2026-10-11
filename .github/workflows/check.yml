@@ -1,0 +1,17 @@
+name: Check package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify package contents and hashes
+        shell: powershell
+        run: .\Verify-Package.ps1
+      - name: Build and run Gate 1 unit tests
+        shell: cmd
+        run: source\Build-Gate1.cmd

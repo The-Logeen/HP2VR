@@ -1,0 +1,8 @@
+LIBRARY d3d11
+EXPORTS
+    D3D11CreateDevice=HP2VRProxyD3D11CreateDevice
+    HP2VR_D3D11CaptureEye
+    HP2VR_D3D11CaptureSequence
+    HP2VR_D3D11ConsumerReady
+    HP2VR_D3D11ReadPixels
+    HP2VR_D3D11UploadPanel

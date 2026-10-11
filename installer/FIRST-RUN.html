@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>HP2VR first run</title>
+<style>body{max-width:800px;margin:45px auto;padding:20px;background:#17202b;color:#eee;font:18px/1.6 system-ui}h1,h2{color:#f2ce81}code{color:#a9def9}</style>
+<h1>Welcome to HP2VR</h1><p>This is a Windows PC VR mod, not a standalone Quest APK. Connect your headset to the PC and confirm it works in SteamVR.</p>
+<ol><li>Install any missing Microsoft prerequisites listed by setup. Close other HP2/HP2VR sessions.</li>
+<li>Start SteamVR and connect both controllers. Open <code>Start-HP2VR.cmd</code> in the installed folder.</li>
+<li>The game should start at its normal menu on a stationary VR panel. Point with the right controller and use the trigger to select New Game or Load Game.</li>
+<li>Stand naturally when gameplay first gives you control, for automatic body-height calibration.</li>
+<li>Use Y for the game menu. Right grip + Y opens VR settings, including eye height, world scale and rotation options. Use SteamVR's reset/recenter to reset your forward direction.</li></ol>
+<h2>Next time</h2><p>Connect the headset, start SteamVR, and run the same <code>Start-HP2VR.cmd</code>. No reinstall or dependency downloads are needed. Load your saved game from the menu.</p>
+<h2>Saves and updates</h2><p>Saves live under <code>runtime\Home\Harry Potter II\Save</code> (and the legacy <code>runtime\Save</code> folder). VR preferences are in <code>runtime\System\HP2VRSettings.ini</code>. Keep the whole installed folder together.</p>
+<p>To update, select the old installed folder in setup's Update from field and choose a new destination. Saves, input preferences, VR settings and existing HD textures are copied. Renderer/game defaults are refreshed. The old installation stays untouched; use the NEW folder's launcher afterward. Saves created after updating are not synchronized back to the old copy.</p>
+<h2>If something fails</h2><p>Do not disable antivirus or add broad exclusions. Report the exact error and blocked filename. An INSTALL-INCOMPLETE marker means setup did not finish; do not launch that copy. Setup diagnostic logs are in the Windows temporary folder, named HP2VR-Setup-*. Game logs are under runtime\Home\Harry Potter II; companion logs are under runtime\VR.</p>
