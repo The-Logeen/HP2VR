@@ -901,7 +901,7 @@ int wmain(int argc, wchar_t** argv) {
         log("HP2 bridge mapping initialization failed error=%lu", GetLastError());
         return 2;
     }
-    log("HP2 x64 companion v3; bridge=%u bytes gpu=%u bytes", static_cast<unsigned>(sizeof(*mappings.main)),
+    log("HP2 x64 companion v3 MENU-DPI-FIX-20261011; bridge=%u bytes gpu=%u bytes", static_cast<unsigned>(sizeof(*mappings.main)),
         static_cast<unsigned>(sizeof(*mappings.gpu)));
     if (offline) {
         log("Offline bridge validation passed; SteamVR was not started");

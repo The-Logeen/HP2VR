@@ -7,6 +7,7 @@ source/build/
 
 # Installed copies, staged runtimes, downloaded dependencies
 Installed-HP2VR/
+Save/
 Dependencies/
 runtime/
 baseline/
@@ -19,6 +20,7 @@ release-staging/
 *.uax
 *.umx
 *.dds
+*.usa
 *.sav
 *.fco
 *.fxh
