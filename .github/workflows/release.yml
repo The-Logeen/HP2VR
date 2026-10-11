@@ -3,6 +3,11 @@ name: Release
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to publish, for example v0.1.0'
+        required: true
 
 permissions:
   contents: write
@@ -19,7 +24,8 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.version || github.ref_name }}
         run: |
-          name="HP2VR-${GITHUB_REF_NAME}"
+          name="HP2VR-${TAG}"
           git archive --format=zip --prefix="$name/" -o "$name.zip" HEAD
-          gh release create "$GITHUB_REF_NAME" "$name.zip" --title "HP2VR $GITHUB_REF_NAME" --notes-file CHANGELOG.md --prerelease
+          gh release create "$TAG" "$name.zip" --target "$GITHUB_SHA" --title "HP2VR $TAG" --notes-file CHANGELOG.md --prerelease
