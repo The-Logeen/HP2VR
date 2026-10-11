@@ -136,13 +136,14 @@ the installed folder. Nothing else on your PC was changed.
 
 ### If something goes wrong
 
-- **"running scripts is disabled on this system"**: you skipped Unblock in
-  Step 1. Delete the extracted folder, unblock the zip, and extract again.
-- **A file "doesn't match" or a version is "not supported"**: you have a
-  different game, renderer or OpenVR version. Recheck the exact versions in
-  the table above (renderer 1.6.2, OpenVR 2.15.6 `win64`).
-- More fixes, including antivirus warnings, are in
-  [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+| Problem | Fix |
+| --- | --- |
+| "running scripts is disabled on this system" | You skipped Unblock in Step 1. Delete the extracted folder, unblock the zip, extract again. |
+| A file "doesn't match" or a version is "not supported" | You have a different game, renderer or OpenVR version. Recheck the exact versions in the table above (renderer 1.6.2, OpenVR 2.15.6 `win64`). |
+| *2. Install / update* stays greyed out | A required row in *Check requirements* isn't *Found*. Read its Details column. |
+| "Choose a new folder" | The installation folder already exists. Type a new folder name. |
+| Antivirus warns about `d3d11.dll` | See [TROUBLESHOOTING.md](TROUBLESHOOTING.md#my-antivirus-flagged-d3d11dll-eg-trojanwin32wacatac). Don't turn your antivirus off. |
+| Nothing in the headset | Start SteamVR and check tracking *before* Start-HP2VR.cmd. More in [TROUBLESHOOTING.md](TROUBLESHOOTING.md). |
 
 ## Controls
 
