@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 (preview), 2026-10-11
+
+- README: exact, step-by-step install guide with a requirements table,
+  which box to pick in the installer, and fixes for common setup errors
+- Release workflow can be started by hand from GitHub Actions
+
 ## 0.1.0 (preview), 2026-10-11
 
 First public mod-only release.
