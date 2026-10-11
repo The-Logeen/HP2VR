@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2 (preview), 2026-10-11
+
+- Fixes the in-headset main menu: the startup panel now fills correctly and
+  the right trigger selects Load Game / New Game. The companion now uses the
+  game window's Windows DPI setting when finding, capturing and clicking the
+  game's native menu, and clears a held trigger when the dialog changes.
+- New native menu DPI regression test (`source/tests/NativeMenuDpiTests.cpp`)
+- Package check also blocks `.usa`, `.bmp`, `.log` and `*_uax` files
+
 ## 0.1.1 (preview), 2026-10-11
 
 - README: exact, step-by-step install guide with a requirements table,

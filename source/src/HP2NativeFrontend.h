@@ -9,6 +9,16 @@
 // HP2's startup dialogs exist before UGameEngine. Keep their pixels and input
 // inside the companion, and accept windows only from this private Game.exe.
 struct HP2NativeFrontend {
+    // GDI surfaces and legacy child coordinates must use the owning window's
+    // DPI context, not the companion's per-monitor physical pixel context.
+    struct WindowDpiScope {
+        DPI_AWARENESS_CONTEXT previous{};
+        explicit WindowDpiScope(HWND target) {
+            const auto context = GetWindowDpiAwarenessContext(target);
+            if (context) previous = SetThreadDpiAwarenessContext(context);
+        }
+        ~WindowDpiScope() { if (previous) SetThreadDpiAwarenessContext(previous); }
+    };
     std::wstring executable;
     HWND window{}, pressedWindow{};
     bool triggerHeld{};
@@ -49,6 +59,7 @@ struct HP2NativeFrontend {
         if (!IsWindowVisible(candidate) || !IsWindowEnabled(candidate)) return TRUE;
         wchar_t type[64]{}; GetClassNameW(candidate, type, 64);
         if (wcscmp(type, L"#32770") || !self.owned(candidate)) return TRUE;
+        WindowDpiScope dpi(candidate);
         RECT rect{}; GetClientRect(candidate, &rect);
         if (rect.right <= 0 || rect.bottom <= 0) return TRUE;
         self.window = candidate;
@@ -58,11 +69,12 @@ struct HP2NativeFrontend {
         HWND old = window;
         window = nullptr;
         EnumWindows(find, reinterpret_cast<LPARAM>(this));
-        if (window != old) { pressedWindow = nullptr; lastCapture = 0; }
+        if (window != old) { pressedWindow = nullptr; triggerHeld = false; lastCapture = 0; }
         return window != nullptr;
     }
     bool capture() {
         if (!window) return false;
+        WindowDpiScope dpi(window);
         RECT rect{}; GetClientRect(window, &rect);
         const unsigned w = rect.right, h = rect.bottom;
         if (!w || !h || w > 4096 || h > 4096) return false;
@@ -116,6 +128,7 @@ struct HP2NativeFrontend {
         if (!window || !input.focusOwned || !input.inputAvailable || !input.pointerValid) {
             pressedWindow = nullptr; triggerHeld = down; return;
         }
+        WindowDpiScope dpi(window);
         POINT point{static_cast<LONG>(std::clamp(input.pointerUv[0], 0.f, 1.f) * (width - 1)),
                     static_cast<LONG>(std::clamp(input.pointerUv[1], 0.f, 1.f) * (height - 1))};
         HWND target = window;

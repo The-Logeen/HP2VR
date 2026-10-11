@@ -1,5 +1,13 @@
 # Mod-only packaging checks — 2026-10-05
 
+## 0.1.2 menu fix (October 11, 2026)
+
+The menu fix was confirmed in headset on the maintainer's repaired installation:
+the menu displays fully and controller selection works. The released companion is
+byte-identical to that confirmed build. The package check and dependency
+preflight pass for this release. A fresh clean-machine install and a full
+play-through of this release have not been tested yet.
+
 ## Guided setup revision
 
 - WinForms layout constructed successfully under Windows PowerShell with 32 controls.
