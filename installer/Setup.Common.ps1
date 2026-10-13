@@ -48,7 +48,9 @@ function Get-HP2SetupStatus {
     else{foreach($id in $ids){
         $relative=$id.Groups[1].Value.Replace('\\','\');$file=Join-Path $GameRoot $relative
         try{if(!(Test-Path -LiteralPath $file -PathType Leaf)){$state='Missing';$detail=$relative;break}
-            if((Get-FileHash -LiteralPath $file).Hash -ne $id.Groups[2].Value){$state='Wrong version';$detail=$relative;break}
+            $hash=(Get-FileHash -LiteralPath $file).Hash
+            Write-Host "GAME CHECK $file expected=$($id.Groups[2].Value) actual=$hash"
+            if($hash -ne $id.Groups[2].Value){$state='Wrong version';$detail="$file expected=$($id.Groups[2].Value) actual=$hash";break}
         }catch{$state='Blocked';$detail=$_.Exception.Message;break}
     }}
     Add-Status 'HP2 game' $state $detail $true
@@ -59,7 +61,9 @@ function Get-HP2SetupStatus {
         foreach($entry in $external | Where-Object {($_.path -eq 'VR/openvr_api.dll') -eq ($group -eq 'OpenVR')}){
             $file=if($group -eq 'OpenVR'){Resolve-OpenVRFile $OpenVRDll}else{Resolve-RendererFile $RendererRoot $entry.path}
             try{if(!$file -or !(Test-Path -LiteralPath $file -PathType Leaf)){$state='Missing';$detail=$entry.path;break}
-                if((Get-FileHash -LiteralPath $file).Hash -ne $entry.sha256){$state='Wrong version';$detail=$entry.path;break}
+                $hash=(Get-FileHash -LiteralPath $file).Hash
+                Write-Host "DEPENDENCY CHECK $file expected=$($entry.sha256) actual=$hash"
+                if($hash -ne $entry.sha256){$state='Wrong version';$detail="$file expected=$($entry.sha256) actual=$hash";break}
             }catch{$state='Blocked';$detail=$_.Exception.Message;break}
         }
         Add-Status $group $state $detail $true
