@@ -166,6 +166,10 @@ in-body vs cinematic camera) are saved in `runtime\System\HP2VRSettings.ini`.
 
 ## Help
 
+If setup fails, click **Open diagnostic logs** and attach that folder to your
+report; [INSTALLER-DIAGNOSTICS.md](INSTALLER-DIAGNOSTICS.md) explains each file.
+The logs contain your Windows username in file paths, so review them first.
+
 See [TROUBLESHOOTING.md](TROUBLESHOOTING.md), including what to do if your
 antivirus flags `d3d11.dll`. Report bugs through
 [Issues](../../issues) with the template filled in.

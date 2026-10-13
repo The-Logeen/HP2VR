@@ -1,5 +1,14 @@
 # Mod-only packaging checks — 2026-10-05
 
+## 0.1.3 installer diagnostics (October 12, 2026)
+
+Worker tests verified a successful preflight, a missing game, a missing
+dependency, a failed requirements check (reported without a worker crash) and a
+missing backend. Failure reports include the phase, exception and source
+location, and text output has no raw CLIXML. Preflight runs did not create an
+installation. The WinForms layout builds with 33 controls. This covers the
+installer's diagnostics, not headset play. Game binaries are unchanged.
+
 ## 0.1.2 menu fix (October 11, 2026)
 
 The menu fix was confirmed in headset on the maintainer's repaired installation:

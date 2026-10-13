@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.3 (preview), 2026-10-13
+
+- Installer diagnostics: each Check requirements or Install / update run saves
+  its own log folder (request, transcript, raw output, result report) in your
+  Windows temp folder, with an **Open diagnostic logs** button. Failures name
+  the phase, the file, expected and actual hashes, and a next step. See
+  [INSTALLER-DIAGNOSTICS.md](INSTALLER-DIAGNOSTICS.md).
+- Setup window errors are saved to `HP2VR-Setup-GUI-error-*.txt`
+- Game and mod binaries are unchanged
+
 ## 0.1.2 (preview), 2026-10-11
 
 - Fixes the in-headset main menu: the startup panel now fills correctly and
