@@ -1,5 +1,13 @@
 # Mod-only packaging checks — 2026-10-05
 
+## 0.1.4 guided setup (October 14, 2026)
+
+Installer-only update: path normalization, wider renderer and OpenVR folder
+detection, per-row help and the offline setup guide. The package check
+passes. Game and mod binaries are byte-identical to 0.1.3,
+so the headset menu result below still applies. A clean-machine install and a
+full play-through have not been tested yet.
+
 ## 0.1.3 installer diagnostics (October 12, 2026)
 
 Worker tests verified a successful preflight, a missing game, a missing

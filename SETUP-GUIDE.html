@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HP2VR — complete setup and troubleshooting</title>
+<style>body{font:17px/1.6 system-ui,sans-serif;max-width:940px;margin:40px auto;padding:0 24px;color:#e8edf5;background:#111923}h1,h2,h3{line-height:1.2}h2{margin-top:2.5em}a{color:#8ac9ff}pre,aside{background:#202d3d;padding:18px;border-radius:8px;overflow:auto}li{margin:.5em 0}code{color:#b9e6ff}nav a{margin-right:16px}strong{color:#fff}</style>
+<h1>HP2VR: from downloads to your first VR game</h1>
+<p>This guide opens offline; download links require internet. The installer does not download dependencies automatically. Keep your original game and existing working VR installation.</p>
+<aside><strong>No dgVoodoo installation is required.</strong> HP2VR uses the HP2 DX11 renderer. You need complete supported game files, but do not need to repair their original flat-screen graphics configuration first. This is Windows PC VR, not a standalone Quest APK.</aside>
+<nav><a href="#downloads">Downloads</a><a href="#renderer">Renderer</a><a href="#openvr">OpenVR</a><a href="#install">Install</a><a href="#play">Play</a><a href="#problems">Fix a failed check</a></nav>
+<h2 id="downloads">1. Get the mod and base game</h2>
+<ol><li>Open the <a href="https://github.com/The-Logeen/HP2VR/releases">HP2VR releases page</a>. Choose the newest release, expand <strong>Assets</strong>, and download <code>HP2VR-v…zip</code>, not the automatically generated &ldquo;Source code&rdquo; archives.</li>
+<li>In File Explorer, right-click the ZIP, choose <strong>Extract All</strong>, and extract it into a writable folder such as Documents. Do not run setup inside an archive.</li>
+<li>Open the extracted folder until you see <code>Install-HP2VR.cmd</code>, <code>Setup-HP2VR.ps1</code>, <code>installer</code>, and <code>payload</code>. Keep them together.</li>
+<li>Install or fully extract your own Windows PC copy of Harry Potter and the Chamber of Secrets. If the download contains a setup program, extract the download first and run that program. Select the installed game, not its setup EXE or disc image.</li></ol>
+<pre>Game folder ← select this in HP2 game folder
+  System\Game.exe
+  System\Core.dll
+  Maps\
+  Textures\
+  Sounds\
+  Music\</pre>
+<p>The tested MagiPack copy matches our supported build. Other distributions are accepted when the required game identities match. A distribution name alone is not proof. A different executable or engine needs compatibility investigation; do not replace arbitrary DLLs to bypass checks.</p>
+<h2 id="renderer">2. Get HP2 DirectX11 Renderer 1.6.2</h2>
+<ol><li>Open the <a href="https://www.gamepressure.com/download/harry-potter-and-the-chamber-of-secrets-directx11-renderer-v162/zb12b06">version-specific renderer download page</a> and download the archive. <a href="https://www.moddb.com/mods/unreal-directx11-renderer-for-ut-ug-rune-and-dx">Author's project</a>.</li>
+<li>Extract the entire archive, including shaders. Find the folder containing both <code>Common</code> and <code>Harry Potter 2</code>.</li><li>In setup's <strong>Renderer folder</strong>, select that parent folder. You do not need to copy files into your original game.</li></ol>
+<pre>Renderer folder ← preferred selection
+  Common\D3D11Drv.int
+  Common\Effects11.dll
+  Common\d3d11drv\...shader files...
+  Harry Potter 2\d3d11drv.dll</pre>
+<p>If already installed, select the game root containing <code>System</code>, or leave Renderer blank to use the selected game folder. This updated installer also recognizes selection of System, Common, or Harry Potter 2 when the matching files are adjacent. Every resolved component is still verified. It does not combine arbitrary downloads elsewhere on your PC.</p>
+<pre>Alternative prepared layout:
+Renderer folder\System\d3d11drv.dll
+Renderer folder\System\D3D11Drv.int
+Renderer folder\System\Effects11.dll
+Renderer folder\System\d3d11drv\...shaders...</pre>
+<h2 id="openvr">3. Get OpenVR 2.15.6</h2>
+<ol><li>Open <a href="https://github.com/ValveSoftware/openvr/releases/tag/v2.15.6">Valve's OpenVR 2.15.6 release</a>.</li><li>Expand Assets and download <strong>Source code (zip)</strong>. Unlike the mod's source archive, this SDK archive includes the prebuilt DLL we need.</li><li>Extract it. Locate <code>bin\win64\openvr_api.dll</code>.</li><li>Select the extracted SDK root in <strong>OpenVR SDK folder or DLL</strong>. Alternatively paste the full DLL path.</li></ol>
+<pre>openvr-2.15.6 ← preferred folder selection
+  bin\win64\openvr_api.dll ← correct for our 64-bit companion
+  bin\win32\openvr_api.dll ← NOT the required DLL</pre>
+<p>The updated installer also accepts bin or win64 as the selected folder, and removes surrounding quotes from pasted paths. A win32 or unverified DLL is not accepted just because it has the same name. OpenVR is not OpenAI, and it does not replace SteamVR.</p>
+<h2>4. Install Microsoft's prerequisites</h2>
+<h3>Visual C++ 2010 x86</h3><ol><li>Open <a href="https://www.microsoft.com/en-us/download/details.aspx?id=26999">Microsoft's VC++ 2010 SP1 MFC Security Update</a>.</li><li>Click Download and select <code>vcredist_x86.exe</code>.</li><li>Run it and finish setup. Restart if requested. Use x86 even on 64-bit Windows because the renderer is 32-bit.</li></ol>
+<h3>Legacy DirectX libraries</h3><ol><li>Open <a href="https://www.microsoft.com/en-us/download/details.aspx?id=8109">Microsoft's DirectX June 2010 runtime download</a>.</li><li>Download and run <code>directx_Jun2010_redist.exe</code>. Choose a temporary extraction folder.</li><li>Open that folder and run <strong>DXSETUP.exe</strong>. Extraction alone is not installation.</li></ol>
+<p>These legacy libraries coexist with modern Windows DirectX. Do not download individual DLLs from DLL-download sites. The HP2VR installer does not run these Microsoft installers for you. File-presence checks are not full runtime health tests.</p>
+<h2>5. Optional HD textures</h2>
+<ol><li>Open <a href="https://www.moddb.com/mods/harry-potter-and-the-chamber-of-secrets-esrgan-upscale-pack/addons/harry-potter-and-the-chamber-of-secrets-esrgan-upscale-pack">Akven's HP2 ESRGAN 4x pack</a>.</li><li>Download <code>HP2_ESRGAN_Textures.7z</code>, then extract it with an archive tool supporting 7z.</li><li>Select its <code>Textures</code> folder in the optional texture field. DDS files may be inside subfolders.</li></ol>
+<p>Leave blank for base textures on a fresh installation. Do not delete original UTX packages. Updates retain existing DDS textures. No ReShade or extra wrapper is required.</p>
+<h2>6. Prepare SteamVR</h2>
+<ol><li>Install Steam and sign in.</li><li>Install <a href="https://store.steampowered.com/app/250820/SteamVR/">SteamVR</a>.</li><li>Set up your headset manufacturer's PC connection software or your existing PC-VR connection.</li><li>Connect the headset and controllers, start SteamVR, and confirm tracking works before testing HP2VR.</li></ol>
+<p>A Quest needs a PC-VR connection; copying these Windows files onto the headset will not work. SteamVR in a non-default Steam library may require manual verification even if setup says Check manually.</p>
+<h2 id="install">7. Run guided setup</h2>
+<ol><li>Close HP2 and HP2VR. Double-click <strong>Install-HP2VR.cmd</strong> in the extracted mod package.</li><li><strong>HP2 game folder:</strong> Browse to the root containing System and Maps.</li><li><strong>Renderer folder:</strong> select the extracted Common/HP2 parent described above. Blank means use the game folder.</li><li><strong>OpenVR:</strong> select the SDK root or paste the full win64 DLL path.</li><li><strong>HD textures:</strong> select extracted Textures or leave blank.</li><li><strong>Update from:</strong> leave blank for fresh setup. To migrate an existing complete HP2VR installation, select its root instead; setup then takes game, renderer and OpenVR from that old installation.</li><li><strong>New installation folder:</strong> choose a parent using Browse, then enter a new unused folder name such as HP2VR-Play. Do not create that final folder first. Keep it outside the package and old installation.</li><li>Click <strong>1. Check requirements</strong>. Double-click a component row for full details and corrective steps.</li><li>Resolve missing or wrong-version items. Install missing Microsoft runtimes before playing, even if setup allows copying.</li><li>Click <strong>2. Install / update</strong>. Wait for explicit success, then click <strong>Open installed folder</strong>.</li></ol>
+<p>The installer creates an isolated game copy, installs the verified renderer and mod, and writes private configuration. It does not need dgVoodoo or a successful launch of the source game's original graphics setup. It does not overwrite your original game or automatically import unrelated flat-screen saves.</p>
+<h2 id="play">8. First launch and every later session</h2>
+<ol><li>Open the new installed folder and read FIRST-RUN.html.</li><li>Connect the headset, start SteamVR, and confirm both controllers are tracked.</li><li>Double-click <strong>Start-HP2VR.cmd</strong>. Do not use the original game's shortcut or launch Game.exe directly for VR.</li><li>In the headset, confirm the full stationary menu is visible. Use the right-hand pointer and trigger to select New Game or Load Game.</li><li>Confirm gameplay appears, head tracking works, movement responds, and the wand works. These are headset acceptance checks, not things the installer's file checks can prove.</li><li>For later sessions, use the same launcher. Do not reinstall each time. Saves in separate installations do not synchronize.</li></ol>
+<h2 id="problems">9. Missing, close, incompatible, or blocked?</h2>
+<p><strong>A nearby folder is fine when its files verify.</strong> Setup resolves common nearby layouts and shows the resolved renderer/OpenVR path after a successful check. Different binary versions remain unverified unless explicitly supported. A similar name is not a compatibility test.</p>
+<ul><li><strong>Renderer Missing:</strong> read the searched path. Extract the full 1.6.2 archive and select the parent of Common and Harry Potter 2. One DLL without shaders is incomplete.</li><li><strong>OpenVR Missing:</strong> find bin/win64/openvr_api.dll inside the extracted 2.15.6 SDK and select its root or paste the exact file path. If your extraction has an extra nested folder, open it first.</li><li><strong>Wrong version:</strong> the file exists but does not match the supported identity. Use the named release; do not rename files or bypass checks. Provide diagnostics to investigate another build.</li><li><strong>Game Missing:</strong> select the installed game root, not its archive or System folder.</li><li><strong>Destination Exists:</strong> use another new destination. Existing saves/installations are not overwritten.</li><li><strong>Blocked or installer failure:</strong> click Open diagnostic logs. Keep any INSTALL-INCOMPLETE folder. Share the component, full Details, and logs; review paths/usernames before posting. Do not disable antivirus or add broad exclusions.</li><li><strong>Only desktop output or SteamVR room:</strong> verify your PC-VR connection, use the installed VR launcher, and report the companion/game logs. A successful installation is not proof that headset submission succeeded.</li></ul>
+<p>Fresh saves from another flat-screen copy are not automatically migrated. Supported Update from creates a new sibling installation with the old installed copy's saves/settings; the old copy stays available.</p>
+</html>

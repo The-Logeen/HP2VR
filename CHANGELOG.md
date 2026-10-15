@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.4 (preview), 2026-10-15
+
+- Setup finds more folder layouts: for the renderer you can pick the folder
+  holding `Common` and `Harry Potter 2`, or either of those folders; for
+  OpenVR you can pick the SDK root, `bin` or `win64`, or paste the DLL path.
+  Quotes around pasted paths are ignored.
+- Double-click a row in the requirements list for what was searched and how
+  to fix it. A missing file now names the path that was checked, and a found
+  renderer or OpenVR shows the path it resolved to.
+- New offline [SETUP-GUIDE.html](SETUP-GUIDE.html) from download to first
+  launch, opened by the **Full setup guide** button and copied into each
+  installation
+- Game and mod binaries are unchanged
+
 ## 0.1.3 (preview), 2026-10-13
 
 - Installer diagnostics: each Check requirements or Install / update run saves

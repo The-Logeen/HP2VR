@@ -5,8 +5,9 @@ An unofficial, experimental PC VR mod for the original 2002 PC release of
 through SteamVR and maps tracked motion controllers onto the game's own
 controls, including a tracked wand for spellcasting.
 
-> **Status: preview (0.1.0).** Installation, startup and stereo rendering are
-> tested in simulation. Full headset play-through has **not** been verified yet.
+> **Status: preview (0.1.4).** The in-headset main menu is confirmed working
+> (it displays fully and the controller selects). Full headset play-through has
+> **not** been verified yet.
 > Expect rough edges and please report what you find.
 
 This repository is the complete, ready-to-install mod: prebuilt mod files,
@@ -90,7 +91,9 @@ Download the ESRGAN pack and extract it to its own folder, for example
 
 1. In your extracted HP2VR folder, double-click **Install-HP2VR.cmd**.
    A window called *HP2VR guided setup* opens. (If Windows SmartScreen
-   appears, click **More info** > **Run anyway**.)
+   appears, click **More info** > **Run anyway**.) Its **Full setup guide**
+   button opens [SETUP-GUIDE.html](SETUP-GUIDE.html), an offline copy of
+   these steps with folder examples for every box.
 2. Fill in the boxes with **Browse**:
 
    | Box | What to pick |
@@ -105,8 +108,9 @@ Download the ESRGAN pack and extract it to its own folder, for example
 3. Click **1. Check requirements**. A list shows each component and its
    status. Fix any required row marked *Missing* or *Error* (the Details column
    says why), then click it again. **2. Install / update** stays greyed out
-   until everything required is found. SteamVR may show *Check manually*;
-   that's fine if SteamVR runs on your PC.
+   until everything required is found. Double-click any row for what was
+   searched and how to fix it. SteamVR may show *Check manually*; that's fine
+   if SteamVR runs on your PC.
 4. Click **2. Install / update**. Copying can take several minutes; don't
    close the window.
 5. When it finishes, click **Open installed folder**.

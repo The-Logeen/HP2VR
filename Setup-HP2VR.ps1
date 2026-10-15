@@ -20,7 +20,7 @@ $form.AutoScroll=$true
 $fields=@{}
 $y=15
 $intro=New-Object Windows.Forms.Label
-$intro.Text='Install to a NEW folder. Your original game stays untouched. Update: select an existing HP2VR install below.'
+$intro.Text='Start with Full setup guide below. No dgVoodoo needed. Select extracted downloads; install to a NEW folder.'
 $intro.SetBounds(15,$y,950,30);$form.Controls.Add($intro);$y+=35
 foreach($row in @(@('GameRoot','HP2 game folder'),@('DependencyRoot','Renderer folder (blank = game)'),@('OpenVRDll','OpenVR SDK folder or DLL'),@('TextureRoot','Optional HD texture folder'),@('SourceInstallation','Update from (blank = fresh)'),@('Destination','New installation folder'))){
     $label=New-Object Windows.Forms.Label;$label.Text=$row[1];$label.SetBounds(15,$y,230,25);$form.Controls.Add($label)
@@ -51,10 +51,24 @@ foreach($link in @(
 $y+=40
 $status=New-Object Windows.Forms.ListView;$status.View='Details';$status.FullRowSelect=$true;$status.SetBounds(15,$y,945,205)
 [void]$status.Columns.Add('Component',155);[void]$status.Columns.Add('Status',105);[void]$status.Columns.Add('Details',660);$form.Controls.Add($status);$y+=215
+$status.Add_DoubleClick({
+    if(!$status.SelectedItems.Count){return}
+    $row=$status.SelectedItems[0]
+    $hint=switch($row.Text){
+        'Renderer' {'Use Renderer 1.6.2 above. Extract all files. Select the parent containing Common and Harry Potter 2, or a prepared game/System folder. Missing shaders cannot be replaced by the DLL alone.'}
+        'OpenVR' {'Use OpenVR 2.15.6 above. Download Source code (zip), extract, then select the SDK root, bin, win64, or paste the full bin\win64\openvr_api.dll path. Do not use win32.'}
+        'HP2 game' {'Choose the installed root containing System\Game.exe and Maps. A different game build requires compatibility review; a graphics wrapper cannot fix a version mismatch.'}
+        'VC++ 2010 x86' {'Use the Microsoft download button, select vcredist_x86.exe, and run it even on 64-bit Windows.'}
+        'Legacy DirectX' {'Download the June 2010 redist, run it to extract, then run DXSETUP.exe from the extracted folder.'}
+        'Destination' {'Select a parent, then append a new unused folder name. Do not create the final folder first.'}
+        default {'Open Full setup guide for instructions. Open diagnostic logs for the full checked paths and errors.'}
+    }
+    [void][Windows.Forms.MessageBox]::Show(($row.SubItems[2].Text+"`r`n`r`n"+$hint),'HP2VR: '+$row.Text)
+})
 $check=New-Object Windows.Forms.Button;$check.Text='1. Check requirements';$check.SetBounds(15,$y,180,32);$form.Controls.Add($check)
 $install=New-Object Windows.Forms.Button;$install.Text='2. Install / update';$install.SetBounds(205,$y,180,32);$install.Enabled=$false;$form.Controls.Add($install)
-$guide=New-Object Windows.Forms.Button;$guide.Text='First-run guide';$guide.SetBounds(395,$y,160,32);$form.Controls.Add($guide)
-$guide.Add_Click({Start-Process (Join-Path $package 'installer\FIRST-RUN.html')})
+$guide=New-Object Windows.Forms.Button;$guide.Text='Full setup guide';$guide.SetBounds(395,$y,160,32);$form.Controls.Add($guide)
+$guide.Add_Click({Start-Process (Join-Path $package 'SETUP-GUIDE.html')})
 $open=New-Object Windows.Forms.Button;$open.Text='Open installed folder';$open.SetBounds(565,$y,180,32);$open.Enabled=$false;$form.Controls.Add($open)
 $open.Add_Click({Start-Process explorer.exe -ArgumentList ('"'+$fields.Destination.Text+'"')})
 $logs=New-Object Windows.Forms.Button;$logs.Text='Open diagnostic logs';$logs.SetBounds(755,$y,205,32);$logs.Enabled=$false;$form.Controls.Add($logs)
@@ -69,7 +83,7 @@ function Begin-SetupJob([bool]$checking){
     New-Item -ItemType Directory -Path $script:runFolder | Out-Null
     $script:prefix=Join-Path $script:runFolder 'worker'
     $argsMap=@{}
-    foreach($key in $fields.Keys){if($fields[$key].Text.Trim()){$argsMap[$key]=$fields[$key].Text.Trim()}}
+    foreach($key in $fields.Keys){if($fields[$key].Text.Trim()){$argsMap[$key]=$fields[$key].Text.Trim().Trim('"').Trim()}}
     if($checking){$argsMap.StatusFile=$script:prefix+'.json'}
     $request=Join-Path $script:runFolder 'request.json'
     @{Package=$package;Arguments=$argsMap;Mode=$(if($checking){'Check'}else{'Install'})} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $request -Encoding UTF8

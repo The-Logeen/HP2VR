@@ -5,6 +5,9 @@ Set-StrictMode -Version Latest
 function Set-SetupPhase([string]$Name){$global:HP2SetupPhase=$Name;Write-Host ("[{0}] {1}" -f [DateTime]::Now.ToString('HH:mm:ss'),$Name)}
 Set-SetupPhase 'Load setup helpers'
 . (Join-Path $PSScriptRoot 'installer\Setup.Common.ps1')
+foreach($name in @('GameRoot','Destination','DependencyRoot','OpenVRDll','TextureRoot','SourceInstallation')){
+    Set-Variable -Name $name -Value (Normalize-SetupPath (Get-Variable -Name $name -ValueOnly))
+}
 if($StatusFile){
     Set-SetupPhase 'Check requirements and write status report'
     $report=Get-HP2SetupStatus -Package $PSScriptRoot -GameRoot $GameRoot -RendererRoot $DependencyRoot -OpenVRDll $OpenVRDll -TextureRoot $TextureRoot -Destination $Destination -SourceInstallation $SourceInstallation
@@ -198,6 +201,7 @@ if($launcher.Contains("'Install-Gate1.ps1'")){throw 'Unexpected launcher format;
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\Start-HP2VR.cmd') -Destination (Join-Path $target 'Start-HP2VR.cmd')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\INSTALLED-README.txt') -Destination (Join-Path $target 'README.txt')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\FIRST-RUN.html') -Destination (Join-Path $target 'FIRST-RUN.html')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'SETUP-GUIDE.html') -Destination (Join-Path $target 'SETUP-GUIDE.html')
 # Verify payload survived copying (including real-time antivirus scanning).
 foreach($entry in $manifest | Where-Object {$_.path.StartsWith('payload/')}){
     Set-SetupPhase "Verify installed payload: $($entry.path)"

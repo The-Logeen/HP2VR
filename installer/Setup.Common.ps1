@@ -1,6 +1,18 @@
+function Normalize-SetupPath([string]$Path){
+    if(!$Path){return ''}
+    return $Path.Trim().Trim('"').Trim()
+}
 function Resolve-RendererFile([string]$Root,[string]$Relative){
+    $Root=Normalize-SetupPath $Root
     if(!$Root){return ''}
     $candidates=@((Join-Path $Root $Relative))
+    $candidates+=Join-Path $Root $Relative.Substring(7)
+    $parent=Split-Path $Root -Parent
+    if($parent){
+        $candidates+=Join-Path $parent $Relative
+        if($Relative -eq 'System/d3d11drv.dll'){$candidates+=Join-Path $parent 'Harry Potter 2\d3d11drv.dll'}
+        else{$candidates+=Join-Path $parent ('Common\'+$Relative.Substring(7))}
+    }
     if($Relative -eq 'System/d3d11drv.dll'){
         $candidates+=Join-Path $Root 'Harry Potter 2\d3d11drv.dll'
     }else{
@@ -10,8 +22,15 @@ function Resolve-RendererFile([string]$Root,[string]$Relative){
     return $candidates[0]
 }
 function Resolve-OpenVRFile([string]$Path){
+    $Path=Normalize-SetupPath $Path
     if(!$Path){return ''}
-    if(Test-Path -LiteralPath $Path -PathType Container){return Join-Path $Path 'bin\win64\openvr_api.dll'}
+    if(Test-Path -LiteralPath $Path -PathType Container){
+        foreach($relative in @('bin\win64\openvr_api.dll','win64\openvr_api.dll','openvr_api.dll')){
+            $candidate=Join-Path $Path $relative
+            if(Test-Path -LiteralPath $candidate -PathType Leaf){return $candidate}
+        }
+        return Join-Path $Path 'bin\win64\openvr_api.dll'
+    }
     return $Path
 }
 function Resolve-TextureFolder([string]$Path){
@@ -31,6 +50,12 @@ function Assert-NoLinks([string]$Root){
 }
 function Get-HP2SetupStatus {
     param([string]$Package,[string]$GameRoot,[string]$RendererRoot,[string]$OpenVRDll,[string]$TextureRoot,[string]$Destination,[string]$SourceInstallation)
+    $GameRoot=Normalize-SetupPath $GameRoot
+    $RendererRoot=Normalize-SetupPath $RendererRoot
+    $OpenVRDll=Normalize-SetupPath $OpenVRDll
+    $TextureRoot=Normalize-SetupPath $TextureRoot
+    $Destination=Normalize-SetupPath $Destination
+    $SourceInstallation=Normalize-SetupPath $SourceInstallation
     $items=[Collections.Generic.List[object]]::new()
     function Add-Status($name,$state,$detail,$required){$items.Add([pscustomobject]@{Name=$name;State=$state;Detail=$detail;Required=$required})}
     if($SourceInstallation){
@@ -60,11 +85,15 @@ function Get-HP2SetupStatus {
         $state='Found';$detail=if($group -eq 'Renderer'){'HP2 DX11 1.6.2 and all shaders match.'}else{'OpenVR 2.15.6 x64 matches.'}
         foreach($entry in $external | Where-Object {($_.path -eq 'VR/openvr_api.dll') -eq ($group -eq 'OpenVR')}){
             $file=if($group -eq 'OpenVR'){Resolve-OpenVRFile $OpenVRDll}else{Resolve-RendererFile $RendererRoot $entry.path}
-            try{if(!$file -or !(Test-Path -LiteralPath $file -PathType Leaf)){$state='Missing';$detail=$entry.path;break}
+            try{if(!$file -or !(Test-Path -LiteralPath $file -PathType Leaf)){$state='Missing';$detail="Required: $($entry.path). Searched: $file. Extract the complete download; use Full setup guide for exact folder examples.";break}
                 $hash=(Get-FileHash -LiteralPath $file).Hash
                 Write-Host "DEPENDENCY CHECK $file expected=$($entry.sha256) actual=$hash"
                 if($hash -ne $entry.sha256){$state='Wrong version';$detail="$file expected=$($entry.sha256) actual=$hash";break}
             }catch{$state='Blocked';$detail=$_.Exception.Message;break}
+        }
+        if($state -eq 'Found'){
+            $resolved=if($group -eq 'OpenVR'){Resolve-OpenVRFile $OpenVRDll}else{Resolve-RendererFile $RendererRoot 'System/d3d11drv.dll'}
+            $detail+=" Resolved: $resolved"
         }
         Add-Status $group $state $detail $true
     }
