@@ -1,5 +1,12 @@
 # Mod-only packaging checks — 2026-10-05
 
+## 0.1.5 Steam Frame bindings and aim angles (October 18, 2026)
+
+The engine and companion are rebuilt. The aim-angle math tests pass (zero
+defaults, pitch and yaw signs, 8281 angle pairs stay orthonormal) and the package
+check passes. No Frame controller was available, so Frame bindings and the new
+angle page have not been tested in headset yet.
+
 ## 0.1.4 guided setup (October 14, 2026)
 
 Installer-only update: path normalization, wider renderer and OpenVR folder

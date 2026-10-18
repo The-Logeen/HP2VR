@@ -1,4 +1,5 @@
 #pragma once
+#include "HP2AimAngles.h"
 #include "v31-reference/WandInteraction.h"
 #include "v31-reference/VRDraw.h"
 #include "v31-reference/WandMesh.h"
@@ -88,8 +89,9 @@ static bool pose(const HP2VR::InputPayload& sample, FVector& grip, FVector& dire
         const auto& hand = sample.hand[wand.owner];
         if (!HP2VR::finitePose(hand)) return false;
         p = {hand.m[3], hand.m[7], hand.m[11]};
-        direction = basisVector(rotateYaw(trackingVector(-hand.m[2], -hand.m[6], -hand.m[10]), -originYaw), basis).SafeNormal();
-        up = basisVector(rotateYaw(trackingVector(hand.m[1], hand.m[5], hand.m[9]), -originYaw), basis);
+        float aim[3],aimUp[3];HP2AimAngles::axes(hand.m,HP2Settings::wandPitch,HP2Settings::wandYaw,aim,aimUp);
+        direction = basisVector(rotateYaw(trackingVector(aim[0],aim[1],aim[2]), -originYaw), basis).SafeNormal();
+        up = basisVector(rotateYaw(trackingVector(aimUp[0],aimUp[1],aimUp[2]), -originYaw), basis);
     }
     grip = anchor(inputViewport->Actor) + basisVector(rotateYaw(
         trackingVector(p.x - originHead[0], p.y - originHead[1], p.z - originHead[2]), -originYaw), basis) * WorldUnitsPerMetre;

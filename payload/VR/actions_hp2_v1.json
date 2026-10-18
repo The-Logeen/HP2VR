@@ -1,25 +1,89 @@
 {
   "action_sets": [
-    { "name": "/actions/main", "usage": "single" }
+    {
+      "name": "/actions/main",
+      "usage": "single"
+    }
   ],
   "actions": [
-    { "name": "/actions/main/in/left_pose", "type": "pose", "requirement": "suggested" },
-    { "name": "/actions/main/in/right_pose", "type": "pose", "requirement": "suggested" },
-    { "name": "/actions/main/in/move", "type": "vector2", "requirement": "suggested" },
-    { "name": "/actions/main/in/turn", "type": "vector2", "requirement": "suggested" },
-    { "name": "/actions/main/in/cast", "type": "vector1", "requirement": "suggested" },
-    { "name": "/actions/main/in/jump", "type": "vector1", "requirement": "suggested" },
-    { "name": "/actions/main/in/menu", "type": "boolean", "requirement": "suggested" },
-    { "name": "/actions/main/in/left_grip", "type": "boolean", "requirement": "suggested" },
-    { "name": "/actions/main/in/right_grip", "type": "boolean", "requirement": "suggested" },
-    { "name": "/actions/main/in/skip_dialog", "type": "boolean", "requirement": "suggested" },
-    { "name": "/actions/main/out/left_haptic", "type": "vibration", "requirement": "optional" },
-    { "name": "/actions/main/out/right_haptic", "type": "vibration", "requirement": "optional" }
+    {
+      "name": "/actions/main/in/left_pose",
+      "type": "pose",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/right_pose",
+      "type": "pose",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/move",
+      "type": "vector2",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/turn",
+      "type": "vector2",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/cast",
+      "type": "vector1",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/jump",
+      "type": "vector1",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/menu",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/left_grip",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/right_grip",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/in/skip_dialog",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/main/out/left_haptic",
+      "type": "vibration",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/main/out/right_haptic",
+      "type": "vibration",
+      "requirement": "optional"
+    }
   ],
   "default_bindings": [
-    { "controller_type": "vive_controller", "binding_url": "bindings_hp2_vive_controller.json" },
-    { "controller_type": "oculus_touch", "binding_url": "bindings_hp2_oculus_touch.json" },
-    { "controller_type": "knuckles", "binding_url": "bindings_hp2_knuckles.json" }
+    {
+      "controller_type": "vive_controller",
+      "binding_url": "bindings_hp2_vive_controller.json"
+    },
+    {
+      "controller_type": "oculus_touch",
+      "binding_url": "bindings_hp2_oculus_touch.json"
+    },
+    {
+      "controller_type": "knuckles",
+      "binding_url": "bindings_hp2_knuckles.json"
+    },
+    {
+      "controller_type": "frame_controller",
+      "binding_url": "bindings_hp2_frame_controller.json"
+    }
   ],
   "localization": [
     {

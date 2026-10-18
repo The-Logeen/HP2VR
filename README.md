@@ -5,7 +5,7 @@ An unofficial, experimental PC VR mod for the original 2002 PC release of
 through SteamVR and maps tracked motion controllers onto the game's own
 controls, including a tracked wand for spellcasting.
 
-> **Status: preview (0.1.4).** The in-headset main menu is confirmed working
+> **Status: preview (0.1.5).** The in-headset main menu is confirmed working
 > (it displays fully and the controller selects). Full headset play-through has
 > **not** been verified yet.
 > Expect rough edges and please report what you find.
@@ -162,8 +162,15 @@ the installed folder. Nothing else on your PC was changed.
 | VR settings | Right grip + Y |
 | Recenter | SteamVR recenter, or the button on the settings panel's calibration page |
 
-Bindings are provided for Oculus/Meta Touch, Valve Index and HTC Vive
-controllers and can be remapped in SteamVR's controller bindings.
+Bindings are provided for Oculus/Meta Touch, Valve Index, HTC Vive and
+Steam Frame controllers and can be remapped in SteamVR's controller bindings.
+On Steam Frame, left View opens the game menu and right grip + left View opens
+VR settings; see [FRAME-CONTROLS.md](FRAME-CONTROLS.md). Frame support is
+experimental and has not been tested on Frame hardware yet.
+
+If the wand or menu pointer aims at an odd angle with your controllers, open VR
+settings and press **OTHER SETTINGS** four times to adjust wand and pointer
+pitch and yaw separately (2-degree steps, all zero by default).
 
 VR settings (eye height offset, world scale, smooth/snap turning, speed,
 in-body vs cinematic camera) are saved in `runtime\System\HP2VRSettings.ini`.

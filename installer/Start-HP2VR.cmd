@@ -4,5 +4,5 @@ if exist "%~dp0INSTALL-INCOMPLETE.txt" (
  pause
  exit /b 1
 )
-powershell.exe -NoProfile -File "%~dp0tools\Start-HP2VR.ps1"
+powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%~dp0tools\Start-HP2VR.ps1"
 if errorlevel 1 pause

@@ -89,7 +89,7 @@ function Begin-SetupJob([bool]$checking){
     @{Package=$package;Arguments=$argsMap;Mode=$(if($checking){'Check'}else{'Install'})} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $request -Encoding UTF8
     try{
         $worker=Join-Path $package 'installer\Run-SetupJob.ps1'
-        $script:job=Start-Process powershell.exe -ArgumentList @('-NoProfile','-NonInteractive','-STA','-OutputFormat','Text','-File',('"'+$worker+'"'),'-RequestFile',('"'+$request+'"')) -WindowStyle Hidden -PassThru -RedirectStandardOutput ($script:prefix+'.out') -RedirectStandardError ($script:prefix+'.err')
+        $script:job=Start-Process powershell.exe -ArgumentList @('-ExecutionPolicy','Bypass','-NoProfile','-NonInteractive','-STA','-OutputFormat','Text','-File',('"'+$worker+'"'),'-RequestFile',('"'+$request+'"')) -WindowStyle Hidden -PassThru -RedirectStandardOutput ($script:prefix+'.out') -RedirectStandardError ($script:prefix+'.err')
         $null=$script:job.Handle
     }catch{
         $detail="Could not launch setup worker: $($_.Exception.Message)`r`n$($_.InvocationInfo.PositionMessage)`r`n$($_.ScriptStackTrace)"
@@ -134,3 +134,4 @@ $timer.Add_Tick({
 $form.Add_FormClosing({if($script:job){$_.Cancel=$true;[void][Windows.Forms.MessageBox]::Show('Setup is still working. Wait for it to finish.')}})
 if($ValidateLayout){Write-Output ('Layout constructed: '+$form.Controls.Count+' controls');$form.Dispose();$timer.Dispose();return}
 try{[void]$form.ShowDialog()}finally{$timer.Dispose();$form.Dispose()}
+

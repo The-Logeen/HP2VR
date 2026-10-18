@@ -1,4 +1,5 @@
 #include <windows.h>
+#include "HP2AimAngles.h"
 #include <d3d11.h>
 #include <dxgi1_2.h>
 #include <openvr.h>
@@ -385,6 +386,17 @@ struct PanelInteraction {
         std::memcpy(controller, input.hand[1].m, sizeof(controller));
         float origin[3]{}, direction[3]{};
         HP2ScreenPanel::controllerRay(controller, origin, direction);
+        // Read only our sibling runtime settings; keep shared hand poses unchanged.
+        static ULONGLONG checked{};static float pitch{},yaw{};
+        const auto now=GetTickCount64();
+        if(!checked||now-checked>=100){
+            wchar_t settings[MAX_PATH]{};GetModuleFileNameW(nullptr,settings,MAX_PATH);
+            if(auto* slash=wcsrchr(settings,L'\\')){*slash=0;wcscat_s(settings,L"\\..\\System\\HP2VRSettings.ini");
+                pitch=std::clamp(float(static_cast<int>(GetPrivateProfileIntW(L"VR",L"PointerPitchDegrees",0,settings))),-90.f,90.f);
+                yaw=std::clamp(float(static_cast<int>(GetPrivateProfileIntW(L"VR",L"PointerYawDegrees",0,settings))),-90.f,90.f);
+            }checked=now;
+        }
+        float adjustedUp[3];HP2AimAngles::axes(controller,pitch,yaw,direction,adjustedUp);
         float u{}, v{};
         pointerValid = panel.pick(origin, direction, u, v, hit);
         if (!pointerValid) return;

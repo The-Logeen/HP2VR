@@ -93,6 +93,8 @@ copy /y "%ROOT%\vr\bindings_hp2_knuckles.json" "%BUILD%\bindings_hp2_knuckles.js
 if errorlevel 1 exit /b 19
 copy /y "%ROOT%\vr\bindings_hp2_vive_controller.json" "%BUILD%\bindings_hp2_vive_controller.json" >nul
 if errorlevel 1 exit /b 20
+copy /y "%ROOT%\vr\bindings_hp2_frame_controller.json" "%BUILD%\bindings_hp2_frame_controller.json" >nul
+if errorlevel 1 exit /b 31
 "%BUILD%\HP2VRCompanion.exe" --offline
 if errorlevel 1 exit /b 21
 

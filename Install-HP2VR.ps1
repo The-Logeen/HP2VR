@@ -202,6 +202,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\Start-HP2VR.cmd') -De
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\INSTALLED-README.txt') -Destination (Join-Path $target 'README.txt')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'installer\FIRST-RUN.html') -Destination (Join-Path $target 'FIRST-RUN.html')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'SETUP-GUIDE.html') -Destination (Join-Path $target 'SETUP-GUIDE.html')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'FRAME-CONTROLS.md') -Destination (Join-Path $target 'FRAME-CONTROLS.md')
 # Verify payload survived copying (including real-time antivirus scanning).
 foreach($entry in $manifest | Where-Object {$_.path.StartsWith('payload/')}){
     Set-SetupPhase "Verify installed payload: $($entry.path)"

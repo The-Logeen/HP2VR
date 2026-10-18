@@ -15,9 +15,13 @@ inline bool immersiveGnomes=false;
 inline bool tessellation=false;
 inline float hudInset=16.f,hudLower=8.f;
 inline unsigned bodyCalibration{};
+inline float wandPitch{},wandYaw{},pointerPitch{},pointerYaw{};
 inline wchar_t path[MAX_PATH]{};
 inline void load() {
     GetFullPathNameW(L"HP2VRSettings.ini", MAX_PATH, path, nullptr);
+    auto angle=[&](const wchar_t* key){return std::fmax(-90.f,std::fmin(90.f,float(static_cast<int>(GetPrivateProfileIntW(L"VR",key,0,path)))));};
+    wandPitch=angle(L"WandPitchDegrees");wandYaw=angle(L"WandYawDegrees");
+    pointerPitch=angle(L"PointerPitchDegrees");pointerYaw=angle(L"PointerYawDegrees");
     hudInset=std::fmax(0.f,std::fmin(30.f,float(GetPrivateProfileIntW(L"VR",L"HudInsetPercent",16,path))));
     hudLower=std::fmax(-10.f,std::fmin(20.f,float(GetPrivateProfileIntW(L"VR",L"HudLowerPercent",8,path))));
     eyeOffset=static_cast<int>(GetPrivateProfileIntW(L"VR",L"EyeOffsetCm",0,path));
@@ -40,6 +44,9 @@ inline void load() {
     if(snapDegrees < 15 || snapDegrees > 90) snapDegrees=30;
 }
 inline void save() {
+    const wchar_t* angleKeys[]{L"WandPitchDegrees",L"WandYawDegrees",L"PointerPitchDegrees",L"PointerYawDegrees"};
+    float angleVals[]{wandPitch,wandYaw,pointerPitch,pointerYaw};
+    for(int i=0;i<4;++i){wchar_t value[24];swprintf_s(value,L"%.0f",angleVals[i]);WritePrivateProfileStringW(L"VR",angleKeys[i],value,path);}
     WritePrivateProfileStringW(L"VR",L"Tessellation",tessellation?L"1":L"0",path);
     WritePrivateProfileStringW(L"VR",L"ImmersiveGnomes",immersiveGnomes?L"1":L"0",path);
     const wchar_t* keys[]{L"EyeOffsetCm",L"UnitsPerMetre",L"SmoothSpeed",L"SnapDegrees",L"Snap",L"BodyOnly"};
@@ -54,6 +61,7 @@ inline void pointer(float u,float v,bool valid,bool pressed) {
         const int row=static_cast<int>((v-.2f)/.1f);
         const int sign=u<.5f?-1:1;
         if(v>=.2f && v<.8f) {
+            if(page==4){float* values[]{&wandPitch,&wandYaw,&pointerPitch,&pointerYaw};if(row<4)*values[row]=std::fmax(-90.f,std::fmin(90.f,*values[row]+sign*2.f));if(row==4)wandPitch=wandYaw=pointerPitch=pointerYaw=0.f;save();clickHeld=pressed;return;}
             if(page==3){if(row==0)hudInset=std::fmax(0.f,std::fmin(30.f,hudInset+sign*2));if(row==1)hudLower=std::fmax(-10.f,std::fmin(20.f,hudLower+sign*2));wchar_t n[16];swprintf_s(n,L"%.0f",hudInset);WritePrivateProfileStringW(L"VR",L"HudInsetPercent",n,path);swprintf_s(n,L"%.0f",hudLower);WritePrivateProfileStringW(L"VR",L"HudLowerPercent",n,path);}
             else if(page==2) {if(row==0)immersiveGnomes=!immersiveGnomes;if(row==3)++bodyCalibration;if(row==4)tessellation=!tessellation;}
             else if(page==1) {switch(row){case 0:quality=std::max(0,std::min(2,quality+sign));break;case 1:smoothSteps=!smoothSteps;break;case 2:flickLessons=!flickLessons;break;case 3:avatar=!avatar;break;case 4:arrow=!arrow;break;case 5:beam=!beam;break;}}
@@ -67,7 +75,7 @@ inline void pointer(float u,float v,bool valid,bool pressed) {
             }
             save();
         }
-        if(v>=.85f && v<.95f) {if(u<.5f)page=(page+1)%4;else open=false;}
+        if(v>=.85f && v<.95f) {if(u<.5f)page=(page+1)%5;else open=false;}
     }
     clickHeld=pressed;
 }
@@ -106,6 +114,13 @@ inline bool pixels(unsigned width,unsigned height,std::vector<FColor>& out) {
     swprintf_s(row,L"<  Body avatar (experimental): %ls  >",avatar?L"On":L"Off");text(.5f,row);
     swprintf_s(row,L"<  Forward arrow: %ls  >",arrow?L"On":L"Off");text(.6f,row);
     swprintf_s(row,L"<  Extra aim beam: %ls  >",beam?L"On":L"Off");text(.7f,row);
+    }else if(page==4){
+    swprintf_s(row,L"< Wand pitch (up +): %+.0f deg >",wandPitch);text(.2f,row);
+    swprintf_s(row,L"< Wand yaw (right +): %+.0f deg >",wandYaw);text(.3f,row);
+    swprintf_s(row,L"< Pointer pitch (up +): %+.0f deg >",pointerPitch);text(.4f,row);
+    swprintf_s(row,L"< Pointer yaw (right +): %+.0f deg >",pointerYaw);text(.5f,row);
+    text(.6f,L"< Reset all aim angles to zero >");
+    text(.7f,L"2 degree steps. Wand visual and spell aim stay aligned.");
     }else if(page==3){
     swprintf_s(row,L"< HUD inset: %.0f%% >",hudInset);text(.2f,row);
     swprintf_s(row,L"< HUD lower: %+.0f%% >",hudLower);text(.3f,row);

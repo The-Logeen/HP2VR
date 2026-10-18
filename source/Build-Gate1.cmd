@@ -14,6 +14,10 @@ cl /nologo /EHsc /std:c++20 /I"%ROOT%\src" "%ROOT%\tests\HP2VRBridgeTests.cpp" /
 cl /nologo /EHsc /std:c++20 /I"%ROOT%\src" "%ROOT%\tests\HP2BuildIdentityTests.cpp" /Fe"%BUILD%\HP2BuildIdentityTests.exe" /Fo"%BUILD%\HP2BuildIdentityTests.obj" || exit /b 6
 "%BUILD%\HP2BuildIdentityTests.exe" || exit /b 7
 
+echo === Wand and pointer aim-angle math ===
+cl /nologo /EHsc /std:c++20 /I"%ROOT%\src" "%ROOT%\tests\HP2AimAnglesTests.cpp" /Fe"%BUILD%\HP2AimAnglesTests.exe" /Fo"%BUILD%\HP2AimAnglesTests.obj" || exit /b 15
+"%BUILD%\HP2AimAnglesTests.exe" || exit /b 16
+
 echo === Read-only HP2 build inspector ===
 cl /nologo /EHsc /std:c++20 /I"%ROOT%\src" "%ROOT%\src\HP2VRInspector.cpp" /Fe"%BUILD%\HP2VRInspector.exe" /Fo"%BUILD%\HP2VRInspector.obj" /link advapi32.lib || exit /b 8
 

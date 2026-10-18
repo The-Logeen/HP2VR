@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.5 (preview), 2026-10-18
+
+- Experimental Steam Frame controller bindings (`frame_controller`), picked by
+  SteamVR as the default profile "HP2VR - Steam Frame (experimental)". Left
+  View opens the game menu, right grip + left View opens VR settings. Not yet
+  tested on Frame hardware. See [FRAME-CONTROLS.md](FRAME-CONTROLS.md), which
+  is also copied into each installation.
+- New VR settings page (OTHER SETTINGS four times) to adjust wand and menu
+  pointer pitch and yaw independently, from -90 to +90 degrees in 2-degree
+  steps. Defaults are zero, so existing controllers behave as before.
+- Engine and companion rebuilt for the angle settings; Touch, Index and Vive
+  bindings are unchanged
+- Launchers pass `-ExecutionPolicy Bypass` for their own PowerShell process
+  only, so scripts run even when Windows blocks them by default. No saved
+  policy or antivirus setting is changed.
+
 ## 0.1.4 (preview), 2026-10-15
 
 - Setup finds more folder layouts: for the renderer you can pick the folder
